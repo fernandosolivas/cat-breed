@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\clients\CatApiClient;
+use app\services\BreedService;
 use yii\web\Controller;
 
 class SiteController extends Controller
@@ -10,8 +11,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $client = new CatApiClient();
-        $breeds = $client->getBreeds();
+        $service = new BreedService($client);
 
+        $breeds = $service->getBreeds();
         return $this->render('breeds', ['breeds' => $breeds]);
     }
 
