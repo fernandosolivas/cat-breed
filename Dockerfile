@@ -5,3 +5,6 @@ ENV YII_DEBUG=false
 ENV YII_ENV=prd
 
 COPY . .
+
+RUN composer update --prefer-dist
+RUN composer install
