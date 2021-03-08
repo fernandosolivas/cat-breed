@@ -9,7 +9,21 @@
         <p><strong>Temperament: </strong><?php echo $breed->temperament?></p>
         <p><strong>Life span: </strong><?php echo $breed->life_span?> years</p>
         <p class="lead"><?php echo $breed->description ?></p>
-        <a href="<?php echo $breed->cfa_url ?>" class="btn btn-primary">More</a>
+        <div class="flex-row" >
+            <div class="col-sm-12 col-md-3">
+                <?php if (property_exists($breed, 'cfa_url')) { ?>
+                    <a href="<?php echo $breed->cfa_url ?>" class="btn btn-primary">The Cat Franciers' Association</a>
+                <?php } ?>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <?php if (property_exists($breed, 'wikipedia_url')) { ?>
+                    <a href="<?php echo $breed->wikipedia_url ?>" class="btn btn-primary">Wikipedia</a>
+                <?php } ?>
+            </div>
+        </div>
+
+
+
     </div>
 
 </div>
