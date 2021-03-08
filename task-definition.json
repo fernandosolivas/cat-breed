@@ -1,0 +1,35 @@
+{
+  "executionRoleArn": "arn:aws:iam::465832455385:role/ecs_task_assume",
+  "containerDefinitions": [
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/event-api",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "pdv-event-api-log-stream"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 8000,
+          "protocol": "tcp",
+          "containerPort": 8000
+        }
+      ],
+      "cpu": 512,
+      "memory": 1024,
+      "image": "465832455385.dkr.ecr.us-east-1.amazonaws.com/hearst-yii-cat-breed:ba42bcfc59726ae318f72cb064c948a06060fa48",
+      "essential": true,
+      "name": "cat-breed"
+    }
+  ],
+  "placementConstraints": [],
+  "memory": "1024",
+  "family": "cat-breed",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "512"
+}
