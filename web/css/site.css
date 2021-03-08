@@ -113,3 +113,60 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 6px 12px 6px;
+    padding: 0;
+}
+
+.card-content {
+    padding: 12px 24px 24px;
+}
+
+.card > img {
+    width: 100%;
+    height: 25vh;
+}
+@media(max-width: 376px) {
+    .card > img {
+        height: 20vh;
+    }
+}
+
+.card-list {
+    justify-content: center;
+    padding: 0;
+    margin: 24px 0 0 0;
+}
+
+.img-detail {
+    width: 100%;
+    height: auto;
+}
+
+
+html {
+    font-size: 1rem;
+}
+
+.detail {
+    margin-top: 48px;
+}
+@include media-breakpoint-up(sm) {
+    html {
+        font-size: 1.2rem;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    html {
+        font-size: 1.4rem;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    html {
+        font-size: 1.6rem;
+    }
