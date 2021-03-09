@@ -59,4 +59,4 @@ The CI/CD runs in GitHub actions, and the manifest file is located at <root-dir>
 If you need more information about what is and how to use GitHub Actions, click [here](https://github.com/features/actions).
 
 ### Deployment
-After the GitHub Action ends, the application will be live at https://cat-breed.monoviagem.com.
+After the GitHub Action ends, the application will be live at http://cat-breed.monoviagem.com.

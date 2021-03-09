@@ -5,6 +5,7 @@ namespace app\services;
 use app\builders\BreedBuilder;
 use app\clients\CatApiClient;
 use app\models\Breed;
+use Yii;
 
 class BreedService
 {
@@ -31,6 +32,11 @@ class BreedService
 
     public function getSimilarBreeds($id): array
     {
+        $cachedSimilarBreeds = Yii::$app->cache->redis->hget('similar-breed-'.$id);
+        if ($cachedSimilarBreeds) {
+            return $cachedSimilarBreeds;
+        }
+
         $breeds = [];
         $breedImage = $this->client->getBreedImage($id);
         if ($breedImage !== null) {
@@ -40,12 +46,18 @@ class BreedService
                 $breeds[$breedsCount] = $breed;
                 $breedsCount++;
             }
+            Yii::$app->cache->redis->hset('similar-breed-'.$id, $breeds);
         }
         return $breeds;
     }
 
     public function getBreedDetail($id): array
     {
+        $cachedSimilarBreeds = Yii::$app->cache->redis->hget('breed-detail-'.$id);
+        if ($cachedSimilarBreeds) {
+            return $cachedSimilarBreeds;
+        }
+
         $breeds = [];
         $breedImage = $this->client->getBreedImage($id);
         if ($breedImage !== null) {
@@ -55,9 +67,9 @@ class BreedService
                 $breeds[$breedsCount] = $breed;
                 $breedsCount++;
             }
-            return $breeds;
+            Yii::$app->cache->redis->hset('breed-detail-'.$id, $breeds);
         }
-        return [];
+        return $breeds;
     }
 
     private function getImageUrl($breed, $imageUrl): string

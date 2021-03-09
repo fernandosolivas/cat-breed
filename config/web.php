@@ -20,7 +20,7 @@ $config = [
             'appendTimestamp' => true,
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\redis\Cache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -45,10 +45,15 @@ $config = [
                 ],
             ],
         ],
-        'db' => $db,
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false
+        ],
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => YII_ENV === 'dev'?  'localhost' : 'breed.hvbumt.ng.0001.use1.cache.amazonaws.com',
+            'port' => 6379,
+            'database' => 0,
         ],
     ],
     'params' => $params,

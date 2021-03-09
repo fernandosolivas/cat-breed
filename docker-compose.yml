@@ -1,6 +1,7 @@
 version: '2'
 services:
   php:
+    container_name: site
     image: yiisoftware/yii2-php:7.4-apache
     environment:
       - CAT_API_KEY=<put-your-api-key>
@@ -9,3 +10,18 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
+    depends_on:
+      - redis
+    networks:
+      - backend
+  redis:
+    container_name: redis
+    image: redis:alpine3.13
+    ports:
+      - 6379:6379
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
