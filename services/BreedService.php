@@ -27,12 +27,14 @@ class BreedService
             $breed = $this->createBreed($randomBreed);
             $random_breeds[$key] = $breed;
         }
+        Yii::debug('retrieving five random breeds', __METHOD__);
         return $random_breeds;
     }
 
     public function getBreedsByName(string $name): array {
         $cachedBreeds = CacheService::getBreedsByName($name);
         if ($cachedBreeds !== null) {
+            Yii::debug('retrieving breeds from cache by name '.$name, __METHOD__);
             return $cachedBreeds;
         }
 
@@ -45,6 +47,8 @@ class BreedService
                 $breeds[$breedsCount] = $breed;
                 $breedsCount++;
             }
+
+            Yii::debug('retrieving breeds by name '.$name, __METHOD__);
             CacheService::setBreedsByName($name, $breeds);
         }
         return $breeds;
@@ -54,6 +58,7 @@ class BreedService
     {
         $cachedBreed = CacheService::getBreedDetails($id);
         if ($cachedBreed != null) {
+            Yii::debug('retrieving breed with details from cache by id '.$id, __METHOD__);
             return $cachedBreed;
         }
 
@@ -66,7 +71,7 @@ class BreedService
                 $breeds[$breedsCount] = $breed;
                 $breedsCount++;
             }
-
+            Yii::debug('retrieving breed with details by id '.$id, __METHOD__);
             CacheService::setBreedDetail($id, $breeds);
         }
         return $breeds;
@@ -75,6 +80,7 @@ class BreedService
     private function getImageUrl($breed, $imageUrl): string
     {
         if ($imageUrl !== BreedService::DEFAULT_IMAGE_URL) {
+            Yii::debug('using image url'.$breed->id, __METHOD__);
             return $imageUrl;
         }
 
@@ -83,6 +89,7 @@ class BreedService
         }
 
         if (property_exists($breed, 'reference_image_id')) {
+            Yii::debug('fetching image with reference id '.$breed->reference_image_id, __METHOD__);
             $breedImage = $this->client->getImage($breed->reference_image_id);
 
             return $breedImage->url;
@@ -91,9 +98,9 @@ class BreedService
         return BreedService::DEFAULT_IMAGE_URL;
     }
 
-    private function createBreed($rawBreed, string $imageUrl = BreedService::DEFAULT_IMAGE_URL): Breed
+    private function createBreed($rawBreed): Breed
     {
-        $url = $this->getImageUrl($rawBreed, $imageUrl);
+        $url = $this->getImageUrl($rawBreed, BreedService::DEFAULT_IMAGE_URL);
         $builder = new BreedBuilder();
         return $builder
             ->createBreed()
