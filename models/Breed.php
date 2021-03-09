@@ -1,8 +1,6 @@
 <?php
 
-
 namespace app\models;
-
 
 use yii\base\Model;
 
@@ -18,31 +16,11 @@ class Breed extends Model
     private $temperament;
     private $lifeSpan;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name'], 'required'],
         ];
-    }
-
-    public static function createBreed($id, $name, $imageUrl) {
-        $breed = new Breed();
-        $breed->id = $id;
-        $breed->name = $name;
-        $breed->imageUrl = $imageUrl;
-        return $breed;
-    }
-
-    public static function createDetailsBreed($id, $name, $imageUrl, $description, $cfaUrl, $wikipediaUrl, $origin, $temperament, $lifeSpan)
-    {
-        $breed = Breed::createBreed($id, $name, $imageUrl);
-        $breed->description = $description;
-        $breed->cfaUrl = $cfaUrl;
-        $breed->wikipediaUrl = $wikipediaUrl;
-        $breed->origin = $origin;
-        $breed->temperament = $temperament;
-        $breed->lifeSpan = $lifeSpan;
-        return $breed;
     }
 
     /**
@@ -54,11 +32,27 @@ class Breed extends Model
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return mixed
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
     }
 
     /**
@@ -70,11 +64,27 @@ class Breed extends Model
     }
 
     /**
+     * @param mixed $imageUrl
+     */
+    public function setImageUrl($imageUrl): void
+    {
+        $this->imageUrl = $imageUrl;
+    }
+
+    /**
      * @return mixed
      */
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
     }
 
     /**
@@ -86,11 +96,27 @@ class Breed extends Model
     }
 
     /**
+     * @param mixed $cfaUrl
+     */
+    public function setCfaUrl($cfaUrl): void
+    {
+        $this->cfaUrl = $cfaUrl;
+    }
+
+    /**
      * @return mixed
      */
     public function getWikipediaUrl()
     {
         return $this->wikipediaUrl;
+    }
+
+    /**
+     * @param mixed $wikipediaUrl
+     */
+    public function setWikipediaUrl($wikipediaUrl): void
+    {
+        $this->wikipediaUrl = $wikipediaUrl;
     }
 
     /**
@@ -102,11 +128,27 @@ class Breed extends Model
     }
 
     /**
+     * @param mixed $origin
+     */
+    public function setOrigin($origin): void
+    {
+        $this->origin = $origin;
+    }
+
+    /**
      * @return mixed
      */
     public function getTemperament()
     {
         return $this->temperament;
+    }
+
+    /**
+     * @param mixed $temperament
+     */
+    public function setTemperament($temperament): void
+    {
+        $this->temperament = $temperament;
     }
 
     /**
@@ -117,13 +159,11 @@ class Breed extends Model
         return $this->lifeSpan;
     }
 
-
     /**
-     * @param mixed $name
+     * @param mixed $lifeSpan
      */
-    public function setName($name)
+    public function setLifeSpan($lifeSpan): void
     {
-        $this->name = $name;
+        $this->lifeSpan = $lifeSpan;
     }
-
 }

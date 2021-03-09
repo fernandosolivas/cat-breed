@@ -13,12 +13,18 @@
 
         <?= $form->field($model, 'name') ?>
         <div class="form-group">
-            <div class="search-container col-lg-offset-1 col-lg-3">
-                <?= Html::submitButton('Search', ['class' => 'col-md-4 col-sm-6 btn btn-primary']) ?>
+            <div class="search-container col-lg-offset-4 col-lg-3">
+                <?= Html::submitButton('Search', ['class' => 'col-md-12 col-sm-6 btn btn-secondary']) ?>
             </div>
         </div>
         <?php ActiveForm::end() ?>
     </div>
+
+    <?php if(count($breeds) === 0) { ?>
+        <div class="col-sm-12">
+            <h2>No breed with name <?php echo $model->name ?> was found</h2>
+        </div>
+    <?php } ?>
 
     <?php foreach ($breeds as $breed): ?>
         <div class="col-sm-12  col-md-5 col-lg-5 card">
