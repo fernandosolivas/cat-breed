@@ -31,6 +31,11 @@ class BreedService
     }
 
     public function getBreedsByName(string $name): array {
+        $cachedBreeds = CacheService::getBreedsByName($name);
+        if ($cachedBreeds !== null) {
+            return $cachedBreeds;
+        }
+
         $breeds = [];
         $breedsByName = $this->client->getBreedsByName($name);
         if (count($breedsByName) > 0) {
@@ -40,12 +45,18 @@ class BreedService
                 $breeds[$breedsCount] = $breed;
                 $breedsCount++;
             }
+            CacheService::setBreedsByName($name, $breeds);
         }
         return $breeds;
     }
 
     public function getBreedDetail(string $id): array
     {
+        $cachedBreed = CacheService::getBreedDetails($id);
+        if ($cachedBreed != null) {
+            return $cachedBreed;
+        }
+
         $breeds = [];
         $breedImage = $this->client->getBreedImageByBreedId($id);
         if ($breedImage !== null) {
@@ -55,6 +66,8 @@ class BreedService
                 $breeds[$breedsCount] = $breed;
                 $breedsCount++;
             }
+
+            CacheService::setBreedDetail($id, $breeds);
         }
         return $breeds;
     }

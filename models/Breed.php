@@ -2,9 +2,10 @@
 
 namespace app\models;
 
+use JsonSerializable;
 use yii\base\Model;
 
-class Breed extends Model
+class Breed extends Model implements JsonSerializable
 {
     private $id;
     private $name;
@@ -165,5 +166,10 @@ class Breed extends Model
     public function setLifeSpan($lifeSpan): void
     {
         $this->lifeSpan = $lifeSpan;
+    }
+
+    public function jsonSerialize(): object
+    {
+        return (object) get_object_vars($this);
     }
 }
