@@ -30,10 +30,16 @@ class CatApiClient {
         return json_decode($response->getBody());
     }
 
-    public function getBreedImage(string $id): ?object {
+    public function getImage(string $id): ?object {
         $request = new Request('GET',  'images/'.$id);
         $response = $this->client->send($request);
         return json_decode($response->getBody());
+    }
+
+    public function getBreedImageByBreedId(string $breedId): ?object {
+        $request = new Request('GET',  'images/search?breed_id='.$breedId);
+        $response = $this->client->send($request);
+        return json_decode($response->getBody())[0];
     }
 }
 ?>

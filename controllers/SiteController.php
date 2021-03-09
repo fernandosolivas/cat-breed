@@ -24,7 +24,7 @@ class SiteController extends Controller
         return $this->render('breeds', ['breeds' => $breeds, 'model' => $breed]);
     }
 
-    public function actionBreedDetail($id): string
+    public function actionBreedDetail(string $id): string
     {
         $service = new BreedService();
 

@@ -44,25 +44,10 @@ class BreedService
         return $breeds;
     }
 
-    public function getSimilarBreeds($id): array
+    public function getBreedDetail(string $id): array
     {
         $breeds = [];
-        $breedImage = $this->client->getBreedImage($id);
-        if ($breedImage !== null) {
-            $breedsCount = 0;
-            foreach ($breedImage->breeds as $rawBreed) {
-                $breed = $this->createBreed($rawBreed, $breedImage->url);
-                $breeds[$breedsCount] = $breed;
-                $breedsCount++;
-            }
-        }
-        return $breeds;
-    }
-
-    public function getBreedDetail($id): array
-    {
-        $breeds = [];
-        $breedImage = $this->client->getBreedImage($id);
+        $breedImage = $this->client->getBreedImageByBreedId($id);
         if ($breedImage !== null) {
             $breedsCount = 0;
             foreach ($breedImage->breeds as $rawBreed) {
@@ -85,7 +70,7 @@ class BreedService
         }
 
         if (property_exists($breed, 'reference_image_id')) {
-            $breedImage = $this->client->getBreedImage($breed->reference_image_id);
+            $breedImage = $this->client->getImage($breed->reference_image_id);
 
             return $breedImage->url;
         }
@@ -111,15 +96,15 @@ class BreedService
         $builder = new BreedBuilder();
         return $builder
             ->createBreed()
-            ->addId($rawBreed->id)
-            ->addName($rawBreed->name)
-            ->addImageUrl($url)
-            ->addDescription($rawBreed->description)
-            ->addCfaUrl($rawBreed->cfa_url)
-            ->addWikipediaUrl($rawBreed->wikipedia_url)
-            ->addOrigin($rawBreed->origin)
-            ->addTemperament($rawBreed->temperament)
-            ->addLifeSpan($rawBreed->life_span)
+            ->addId($rawBreed->id ?? '')
+            ->addName($rawBreed->name ?? '')
+            ->addImageUrl($url ?? '')
+            ->addDescription($rawBreed->description ?? '')
+            ->addCfaUrl($rawBreed->cfa_url ?? '')
+            ->addWikipediaUrl($rawBreed->wikipedia_url ?? '')
+            ->addOrigin($rawBreed->origin ?? '')
+            ->addTemperament($rawBreed->temperament ?? '')
+            ->addLifeSpan($rawBreed->life_span ?? '')
             ->getBreed();
     }
 }
