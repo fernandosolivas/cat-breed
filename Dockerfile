@@ -1,8 +1,9 @@
 FROM yiisoftware/yii2-php:7.4-apache
+ARG CAT_API_KEY
 
 ENV YII_DEBUG=false
 ENV YII_ENV=prd
-
+ENV CAT_API_KEY=$CAT_API_KEY
 COPY . .
 
 RUN composer update --prefer-dist
