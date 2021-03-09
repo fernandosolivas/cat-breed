@@ -1,9 +1,11 @@
 FROM yiisoftware/yii2-php:7.4-apache
 ARG CAT_API_KEY
+ARG REDIS_URL
 
 ENV YII_DEBUG=false
 ENV YII_ENV=prd
 ENV CAT_API_KEY=$CAT_API_KEY
+ENV REDIS_URL=$REDIS_URL
 COPY . .
 
 RUN composer update --prefer-dist

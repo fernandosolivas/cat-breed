@@ -1,7 +1,10 @@
 <?php
 
+use codemix\yii2confload\Config;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$redisUrl = Config::env('REDIS_URL', 'host.docker.internal');
 
 $config = [
     'id' => 'basic',
@@ -51,7 +54,7 @@ $config = [
         ],
         'redis' => [
             'class' => 'yii\redis\Connection',
-            'hostname' => YII_ENV === 'dev' ?  'host.docker.internal' : 'breed.hvbumt.ng.0001.use1.cache.amazonaws.com',
+            'hostname' => $redisUrl,
             'port' => 6379,
             'database' => 0,
         ],

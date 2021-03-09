@@ -21,7 +21,8 @@
         "guzzlehttp/guzzle": "^7.0",
         "yiisoft/yii2-bootstrap4": "^2.0",
         "yiisoft/yii2-redis": "~2.0.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "codemix/yii2-configloader": "^0.11.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

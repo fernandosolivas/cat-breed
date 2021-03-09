@@ -5,6 +5,8 @@ services:
     image: yiisoftware/yii2-php:7.4-apache
     environment:
       - CAT_API_KEY=<put-your-api-key>
+      - YII_ENV=prd
+      - REDIS_URL=host.docker.internal
     volumes:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       - ./:/app:delegated
