@@ -51,7 +51,7 @@ $config = [
         ],
         'redis' => [
             'class' => 'yii\redis\Connection',
-            'hostname' => YII_ENV === 'dev'?  'localhost' : 'breed.hvbumt.ng.0001.use1.cache.amazonaws.com',
+            'hostname' => YII_ENV === 'dev' ?  'host.docker.internal' : 'breed.hvbumt.ng.0001.use1.cache.amazonaws.com',
             'port' => 6379,
             'database' => 0,
         ],

@@ -12,7 +12,7 @@ class CatApiClient {
     function __construct() {
         $this->client = new Client([
             'base_uri' => 'https://api.thecatapi.com/v1/',
-            'timeout' => 10.0,
+            'timeout' => 15.0,
         ]);
 
         $this->defaultHeaders = ['x-api-key' => getenv('CAT_API_KEY')];
@@ -24,13 +24,16 @@ class CatApiClient {
         return json_decode($response->getBody());
     }
 
-    public function getBreedImage($id): ?object {
-        $request = new Request('GET',  'images/search?breed_id='.$id);
+    public function getBreedsByName(string $name): array {
+        $request = new Request('GET', 'breeds/search?q='.$name, $this->defaultHeaders);
         $response = $this->client->send($request);
-        if (is_array($response->getBody()) &&  count((array) $response->getBody()) > 0 ) {
-            return json_decode($response->getBody())[0];
-        }
-        return null;
+        return json_decode($response->getBody());
+    }
+
+    public function getBreedImage(string $id): ?object {
+        $request = new Request('GET',  'images/'.$id);
+        $response = $this->client->send($request);
+        return json_decode($response->getBody());
     }
 }
 ?>

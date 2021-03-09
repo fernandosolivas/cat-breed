@@ -30,13 +30,22 @@ class BreedService
         return $random_breeds;
     }
 
+    public function getBreedsByName(string $name): array {
+        $breeds = [];
+        $breedsByName = $this->client->getBreedsByName($name);
+        if (count($breedsByName) > 0) {
+            $breedsCount = 0;
+            foreach ($breedsByName as $rawBreed) {
+                $breed = $this->createBreed($rawBreed);
+                $breeds[$breedsCount] = $breed;
+                $breedsCount++;
+            }
+        }
+        return $breeds;
+    }
+
     public function getSimilarBreeds($id): array
     {
-        $cachedSimilarBreeds = Yii::$app->cache->redis->hget('similar-breed-'.$id);
-        if ($cachedSimilarBreeds) {
-            return $cachedSimilarBreeds;
-        }
-
         $breeds = [];
         $breedImage = $this->client->getBreedImage($id);
         if ($breedImage !== null) {
@@ -46,18 +55,12 @@ class BreedService
                 $breeds[$breedsCount] = $breed;
                 $breedsCount++;
             }
-            Yii::$app->cache->redis->hset('similar-breed-'.$id, $breeds);
         }
         return $breeds;
     }
 
     public function getBreedDetail($id): array
     {
-        $cachedSimilarBreeds = Yii::$app->cache->redis->hget('breed-detail-'.$id);
-        if ($cachedSimilarBreeds) {
-            return $cachedSimilarBreeds;
-        }
-
         $breeds = [];
         $breedImage = $this->client->getBreedImage($id);
         if ($breedImage !== null) {
@@ -67,7 +70,6 @@ class BreedService
                 $breeds[$breedsCount] = $breed;
                 $breedsCount++;
             }
-            Yii::$app->cache->redis->hset('breed-detail-'.$id, $breeds);
         }
         return $breeds;
     }
@@ -77,9 +79,17 @@ class BreedService
         if ($imageUrl !== BreedService::DEFAULT_IMAGE_URL) {
             return $imageUrl;
         }
+
         if (property_exists($breed, 'image') && property_exists($breed->image, 'url')) {
             return $breed->image->url;
         }
+
+        if (property_exists($breed, 'reference_image_id')) {
+            $breedImage = $this->client->getBreedImage($breed->reference_image_id);
+
+            return $breedImage->url;
+        }
+
         return BreedService::DEFAULT_IMAGE_URL;
     }
 

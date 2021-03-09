@@ -15,7 +15,7 @@ class SiteController extends Controller
         $breed = new Breed();
 
         if ($breed->load(Yii::$app->request->post()) && $breed->validate()) {
-            $breeds = $service->getSimilarBreeds($breed->getName());
+            $breeds = $service->getBreedsByName($breed->getName());
 
             return $this->render('breeds', ['breeds' => $breeds, 'model' => $breed]);
         }
