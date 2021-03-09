@@ -2,25 +2,33 @@
 
 namespace app\controllers;
 
-use app\clients\CatApiClient;
+use app\models\Breed;
+use app\models\SearchForm;
 use app\services\BreedService;
 use yii\web\Controller;
+use Yii;
 
 class SiteController extends Controller
 {
     public function actionIndex()
     {
-        $client = new CatApiClient();
-        $service = new BreedService($client);
+        $service = new BreedService();
+        $breed = new Breed();
+
+        if ($breed->load(Yii::$app->request->post()) && $breed->validate()) {
+            $breeds = $service->getSimilarBreeds($breed->name);
+
+            return $this->render('breeds', ['breeds' => $breeds, 'model' => $breed]);
+        }
 
         $breeds = $service->getBreeds();
-        return $this->render('breeds', ['breeds' => $breeds]);
+        return $this->render('breeds', ['breeds' => $breeds, 'model' => $breed]);
     }
 
     public function actionBreedDetail($id) {
-        $client = new CatApiClient();
+        $service = new BreedService();
 
-        $breedImage = $client->getBreedImage($id);
-        return $this->render('breed-detail', ['imageUrl' => $breedImage->url, 'breed' => $breedImage->breeds[0]]);
+        $breeds = $service->getBreedDetail($id);
+        return $this->render('breed-detail', ['breed' => $breeds[0]]);
     }
 }
